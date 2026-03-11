@@ -101,19 +101,19 @@ export default function handler(req, res) {
   const monthChi = CHI[(lm + 0) % 12];
   const animal = ANIMAL[(ly + 8) % 12];
 
+  const pad = n => String(n).padStart(2, "0");
+
   const response = {
-    // Các trường Widgy có thể dùng riêng lẻ
-    ngay_am_lich: `${ld}/${lm}${isLeap ? " nhuận" : ""}`,
+    ngay_am_lich: `${pad(ld)}/${pad(lm)}${isLeap ? " nhuận" : ""}`,
     nam_am_lich: `${yearCan} ${yearChi}`,
     ngay_can_chi: `${dayCan} ${dayChi}`,
     thang_can_chi: `${monthCan} ${monthChi}`,
     con_giap: animal,
     thu: THUNHAT[now.getDay()],
-    ngay_duong: `${dd}/${mm}/${yy}`,
+    ngay_duong: `${pad(dd)}/${pad(mm)}/${yy}`,
 
-    // Chuỗi đầy đủ để hiển thị 1 text layer
-    hien_thi_ngan: `${animal} ${NGAY_TEN[ld]} tháng ${lm}\nNăm ${yearCan} ${yearChi}`,
-    hien_thi_day_du: `${THUNHAT[now.getDay()]}, ${dd}/${mm}/${yy}\n${animal} ${NGAY_TEN[ld]} tháng ${lm}${isLeap ? " (nhuận)" : ""}\nNăm ${yearCan} ${yearChi}`
+    hien_thi_ngan: `${animal} ${NGAY_TEN[ld]} tháng ${pad(lm)}\nNăm ${yearCan} ${yearChi}`,
+    hien_thi_day_du: `${THUNHAT[now.getDay()]}, ${pad(dd)}/${pad(mm)}/${yy}\n${animal} ${NGAY_TEN[ld]} tháng ${pad(lm)}${isLeap ? " (nhuận)" : ""}\nNăm ${yearCan} ${yearChi}`
   };
 
   res.setHeader("Cache-Control", "s-maxage=3600, stale-while-revalidate");
